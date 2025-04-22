@@ -1,1 +1,1 @@
-# Skoltech
+# Skoltech. Education files
