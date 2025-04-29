@@ -60,7 +60,7 @@ for filename in filenames:
     plt.xlabel('Время, с')
     plt.ylabel('Среднеквадратичное отклонение, cм²')
     plt.legend()
-    plt.title(f'Зависимость среднеквадратичного отклонения от времени при температуре T = {temps[i]}')
+    plt.title(f'Зависимость среднеквадратичного отклонения от времени при температуре T = {temps[i]} К')
     plt.tight_layout()
     i += 1
 plt.show()
