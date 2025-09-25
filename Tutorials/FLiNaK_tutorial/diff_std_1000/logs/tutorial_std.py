@@ -1,6 +1,12 @@
+"""Рисует гистограмму получившихся в модуляциях диффузий, выводит mean, std.
+
+На входе нужно указать используемые filenames
+"""
+
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.linear_model import LinearRegression
+import seaborn as sns
 
 def read_lammps_log(filename):
     step = []
@@ -30,15 +36,29 @@ def read_lammps_log(filename):
     return np.array(step), temp, density, np.array(msdLi), header
 
 filenames = [
-    'tutorial1.e4776903', 'tutorial2.e4776900', 'tutorial3.e4776914'
+    "tutorial.e4776856",
+    "tutorial.e4776858",
+    "tutorial.e4776864",
+    "tutorial.e4776866",
+    "tutorial.e4776867",
+    "tutorial.e4776869",
+    "tutorial.e4776870",
+    "tutorial.e4776871",
+    "tutorial.e4776872",
+    "tutorial.e4776873",
 ]
 
-diffs = []
-N = np.array([93, 744, 2511])
+temps = [1000] * 10
 
+densities = []
+diffs = []
+
+i = 0
 for filename in filenames:
     step, temp, density, msdLi, header = read_lammps_log(filename)
 
+    densities.append(np.mean(density))
+    
     X = ((step - 30000) * 10 ** (-15)).reshape(-1, 1)   
     y = msdLi * 10 ** (-16)          
 
@@ -49,10 +69,16 @@ for filename in filenames:
     b = model.intercept_
     diffs.append(k / 6)
 
-plt.plot(np.power(N, -1/3), diffs)
-plt.title('Зависимость коэффиценту диффузии от концентрации')
-plt.xlabel('N^(-1/3), отн. ед.')
-plt.ylabel('D, см²/с')
+y = np.array(diffs)       
+
+sns.set_theme(style="whitegrid")
+
+plt.figure(figsize=(6,4))
+sns.histplot(y, kde=True, color="skyblue", edgecolor="black", bins=20)
+plt.xlabel("Значение", fontsize=12)
+plt.ylabel("Частота", fontsize=12)
+plt.title("Гистограмма выборки", fontsize=14)
 plt.show()
 
-        
+print(f"Среднее: {np.mean(y):.3e}")
+print(f"Стандартное отклонение: {np.std(y):.3e}")
