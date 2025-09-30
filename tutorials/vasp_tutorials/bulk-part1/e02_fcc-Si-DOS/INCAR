@@ -1,7 +1,0 @@
-System = fcc Si 
-
-ENCUT = 240
-
-ISMEAR = -5      ! tetrahedron method
-LORBIT = 11
-NCORE = 4
