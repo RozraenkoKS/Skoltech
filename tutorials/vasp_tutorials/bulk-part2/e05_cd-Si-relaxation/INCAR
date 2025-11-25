@@ -1,0 +1,13 @@
+System = cd Si
+
+ISMEAR = 0
+SIGMA  = 0.1
+ 
+ENCUT  = 500
+
+IBRION = 2
+ISIF   = 3
+NSW    = 5
+EDIFFG = -0.001
+
+EDIFF  = 1E-06
